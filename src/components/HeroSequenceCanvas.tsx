@@ -15,7 +15,6 @@ const FRAME_COUNT = 506;
 
 export default function HeroSequenceCanvas({ scrollYProgress }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mobileBackdropRef = useRef<HTMLCanvasElement | null>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const readyRef = useRef(false);
   const frameIndexRef = useRef(0);
@@ -41,62 +40,6 @@ export default function HeroSequenceCanvas({ scrollYProgress }: Props) {
 
       const canvasRatio = canvas.width / canvas.height;
       const imgRatio = img.naturalWidth / img.naturalHeight;
-
-      // On portrait screens, keep the complete 16:9 frame (including the
-      // baked-in IMNAZ wordmark) sharp, and use a dimmed blurred crop behind it
-      // to fill the tall viewport. Desktop keeps the original cover treatment.
-      if (canvasRatio < 0.75) {
-        const backdrop = mobileBackdropRef.current ?? document.createElement("canvas");
-        mobileBackdropRef.current = backdrop;
-
-        const backdropWidth = Math.min(240, Math.max(160, Math.round(canvas.width * 0.3)));
-        const backdropHeight = Math.round(backdropWidth / canvasRatio);
-        if (backdrop.width !== backdropWidth || backdrop.height !== backdropHeight) {
-          backdrop.width = backdropWidth;
-          backdrop.height = backdropHeight;
-        }
-
-        const backdropContext = backdrop.getContext("2d");
-        if (!backdropContext) return;
-
-        const backdropScale = Math.max(backdropWidth / img.naturalWidth, backdropHeight / img.naturalHeight);
-        const backdropDrawWidth = img.naturalWidth * backdropScale;
-        const backdropDrawHeight = img.naturalHeight * backdropScale;
-        backdropContext.clearRect(0, 0, backdropWidth, backdropHeight);
-        backdropContext.filter = "blur(8px) brightness(0.58) saturate(0.88)";
-        backdropContext.drawImage(
-          img,
-          (backdropWidth - backdropDrawWidth) / 2,
-          (backdropHeight - backdropDrawHeight) / 2,
-          backdropDrawWidth,
-          backdropDrawHeight
-        );
-        backdropContext.filter = "none";
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(backdrop, 0, 0, canvas.width, canvas.height);
-        const shade = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        shade.addColorStop(0, "rgba(8, 11, 18, 0.2)");
-        shade.addColorStop(0.5, "rgba(8, 11, 18, 0.08)");
-        shade.addColorStop(1, "rgba(8, 11, 18, 0.25)");
-        ctx.fillStyle = shade;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        const fitScale = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
-        // A slight 8% oversize gives the landscape band more presence while
-        // leaving enough side safe-area for the full IMNAZ wordmark.
-        const mobileFitScale = fitScale * 1.08;
-        const fitWidth = img.naturalWidth * mobileFitScale;
-        const fitHeight = img.naturalHeight * mobileFitScale;
-        const fitX = (canvas.width - fitWidth) / 2;
-        const fitY = (canvas.height - fitHeight) / 2;
-        ctx.save();
-        ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-        ctx.shadowBlur = 18;
-        ctx.drawImage(img, fitX, fitY, fitWidth, fitHeight);
-        ctx.restore();
-        return;
-      }
 
       let drawWidth: number;
       let drawHeight: number;
