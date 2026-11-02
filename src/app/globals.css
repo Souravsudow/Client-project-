@@ -89,6 +89,13 @@
   overflow: hidden;
 }
 
+@media (max-width: 640px) {
+  .hero-sticky {
+    height: 70vh;
+  }
+}
+
+
 .hero-poster {
   position: absolute;
   inset: 0;
