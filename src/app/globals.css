@@ -355,13 +355,19 @@
   border-bottom: 1px solid var(--border);
   padding: 20px 0;
   background: var(--background);
+  cursor: default;
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 30s linear infinite;
+  animation: marquee-scroll 18s linear infinite;
   gap: 0;
+}
+
+/* Pause on hover */
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
 }
 
 .marquee-track span {
@@ -373,6 +379,11 @@
   color: color-mix(in oklab, var(--foreground) 30%, transparent);
   padding: 0 40px;
   white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.marquee-wrap:hover .marquee-track span {
+  color: color-mix(in oklab, var(--foreground) 55%, transparent);
 }
 
 .marquee-track .marquee-dot {
@@ -689,6 +700,28 @@
     transform 0.5s var(--ease-out-expo),
     border-color 0.3s ease,
     box-shadow 0.5s var(--ease-out-expo);
+}
+
+/* Golden shimmer wave */
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(216, 190, 131, 0.12) 50%,
+    transparent 70%
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.service-card:hover::after {
+  left: 160%;
 }
 
 .service-card:hover {
@@ -1232,20 +1265,48 @@
 }
 
 .trust-badge {
+  position: relative;
   background: rgba(24, 19, 16, 0.03);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px 20px;
   text-align: center;
+  overflow: hidden;
   transition:
     transform 0.3s var(--ease-out-expo),
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Golden shimmer */
+.trust-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(216, 190, 131, 0.15) 50%,
+    transparent 70%
+  );
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.trust-badge:hover::after {
+  left: 160%;
 }
 
 .trust-badge:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 36px rgba(24, 19, 16, 0.06);
+  border-color: rgba(216, 190, 131, 0.25);
+  box-shadow:
+    0 12px 36px rgba(24, 19, 16, 0.06),
+    0 0 20px rgba(216, 190, 131, 0.05);
 }
 
 .trust-badge .badge-check {

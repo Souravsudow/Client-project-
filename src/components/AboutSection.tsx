@@ -2,6 +2,7 @@
 
 import AnimatedSection from "./AnimatedSection";
 import Marquee from "./Marquee";
+import AnimatedCounter from "./AnimatedCounter";
 import { company } from "@/lib/site";
 
 export default function AboutSection() {
@@ -28,18 +29,24 @@ export default function AboutSection() {
             </div>
 
             <div className="about-stats stagger">
-              <div className="about-stat">
-                <span className="stat-number">{company.activities.length}</span>
+              <AnimatedSection className="about-stat" delay={0.1}>
+                <span className="stat-number">
+                  <AnimatedCounter target={company.activities.length} />
+                </span>
                 <span className="stat-label">Licensed Activities</span>
-              </div>
-              <div className="about-stat">
-                <span className="stat-number">3</span>
+              </AnimatedSection>
+              <AnimatedSection className="about-stat" delay={0.25}>
+                <span className="stat-number">
+                  <AnimatedCounter target={3} />
+                </span>
                 <span className="stat-label">Core Expertise</span>
-              </div>
-              <div className="about-stat">
-                <span className="stat-number">100%</span>
+              </AnimatedSection>
+              <AnimatedSection className="about-stat" delay={0.4}>
+                <span className="stat-number">
+                  <AnimatedCounter target={100} suffix="%" />
+                </span>
                 <span className="stat-label">Satisfaction Focus</span>
-              </div>
+              </AnimatedSection>
             </div>
 
             <div className="about-mission-vision stagger">
