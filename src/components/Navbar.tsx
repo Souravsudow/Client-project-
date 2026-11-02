@@ -87,11 +87,11 @@ export function Navbar({ onConsult }: { onConsult?: () => void }) {
             <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-transparent flex-shrink-0 transition-transform duration-500 group-hover:scale-105">
               <span className="text-white text-[10px] font-bold tracking-widest">IM</span>
             </div>
-            <div className="flex-col hidden sm:flex">
-              <span className="text-white text-[17px] tracking-wide leading-none font-display font-bold">
+            <div className="flex flex-col">
+              <span className="text-white text-[13px] sm:text-[17px] tracking-wide leading-none font-display font-bold">
                 IMNAZ MOON
               </span>
-              <span className="text-white text-[10px] font-black tracking-[0.3em] uppercase mt-1 font-sans">
+              <span className="text-white text-[7px] sm:text-[10px] font-black tracking-[0.2em] sm:tracking-[0.3em] uppercase mt-1 font-sans">
                 TECHNICAL SERVICE LLC
               </span>
             </div>
