@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import { AnimatedStagger } from "./AnimatedStagger";
 import { company, trustPoints } from "@/lib/site";
 
 export default function TrustSection() {
@@ -38,7 +39,7 @@ export default function TrustSection() {
       </AnimatedSection>
 
       <AnimatedSection delay={0.2}>
-        <div className="trust-badges stagger">
+        <AnimatedStagger className="trust-badges">
           {[
             { label: "Dubai Based", desc: "Headquartered in Dubai, UAE" },
             { label: "UAE Coverage", desc: "Serving clients across the UAE" },
@@ -51,7 +52,7 @@ export default function TrustSection() {
               <p>{badge.desc}</p>
             </div>
           ))}
-        </div>
+        </AnimatedStagger>
       </AnimatedSection>
 
       <AnimatedSection delay={0.3} className="trust-points-wrap">

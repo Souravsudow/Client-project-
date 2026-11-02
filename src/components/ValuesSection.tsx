@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import { AnimatedStagger } from "./AnimatedStagger";
 import { values, company } from "@/lib/site";
 
 export default function ValuesSection() {
@@ -16,7 +17,7 @@ export default function ValuesSection() {
       </AnimatedSection>
 
       <AnimatedSection delay={0.1}>
-        <div className="values-grid stagger">
+        <AnimatedStagger className="values-grid">
           {values.map((value) => (
             <div key={value.title} className="value-card">
               <div className="value-marker" />
@@ -24,7 +25,7 @@ export default function ValuesSection() {
               <p>{value.text}</p>
             </div>
           ))}
-        </div>
+        </AnimatedStagger>
       </AnimatedSection>
 
       <AnimatedSection delay={0.2}>

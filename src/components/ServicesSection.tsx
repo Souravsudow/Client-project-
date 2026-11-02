@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import { AnimatedStagger } from "./AnimatedStagger";
 import { services } from "@/lib/site";
 
 export default function ServicesSection() {
@@ -32,15 +33,14 @@ export default function ServicesSection() {
         </div>
       </AnimatedSection>
 
-      <div className="services-grid stagger">
+      <AnimatedStagger className="services-grid">
         {services.slice(1).map((service, index) => {
           const number = String(index + 2).padStart(2, "0");
           const accents = ["accent-bronze", "accent-teal", "accent-oxide", "accent-bronze", "accent-teal"];
           const accent = accents[index % accents.length];
           
           return (
-            <AnimatedSection key={service.title} delay={0.1 * (index + 1)}>
-              <div className="service-card">
+              <div key={service.title} className="service-card">
                 <div className={`card-accent ${accent}`} />
                 <div className="card-bg-number">{number}</div>
                 <div className="service-number">{number}</div>
@@ -48,10 +48,9 @@ export default function ServicesSection() {
                 <h3>{service.title}</h3>
                 <p style={{ fontSize: "0.88rem" }}>{service.summary}</p>
               </div>
-            </AnimatedSection>
           );
         })}
-      </div>
+      </AnimatedStagger>
     </section>
   );
 }

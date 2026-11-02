@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import { AnimatedStagger } from "./AnimatedStagger";
 
 const sectors = [
   {
@@ -28,12 +29,11 @@ export default function SectorsSection() {
         <h2>Spaces We Transform</h2>
       </AnimatedSection>
 
-      <div className="sectors-grid">
+      <AnimatedStagger className="sectors-grid">
         {sectors.map((sector, index) => {
           const number = String(index + 1).padStart(2, "0");
           return (
-            <AnimatedSection key={sector.title} delay={index * 0.1}>
-              <div className="sector-card">
+              <div key={sector.title} className="sector-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={sector.image}
@@ -46,10 +46,9 @@ export default function SectorsSection() {
                   <p>{sector.description}</p>
                 </div>
               </div>
-            </AnimatedSection>
           );
         })}
-      </div>
+      </AnimatedStagger>
     </section>
   );
 }
