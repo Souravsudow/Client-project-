@@ -18,6 +18,7 @@ const navLinks = [
 export function Navbar({ onConsult }: { onConsult?: () => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero-section");
 
   // Default CTA behaviour: take the visitor to the contact section. Without a
   // fallback the Consultation buttons render but do nothing.
@@ -53,6 +54,30 @@ export function Navbar({ onConsult }: { onConsult?: () => void }) {
     return () => observer.disconnect();
   }, []);
 
+  // Keep a quiet section indicator in sync with the content currently in view.
+  useEffect(() => {
+    const sectionIds = ["hero-section", ...navLinks
+      .map(({ to }) => to.slice(1))
+      .filter((id) => id && id !== "#")];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section !== null);
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-25% 0px -60% 0px", threshold: [0, 0.15, 0.35, 0.6] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   // Prevent background scrolling when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -60,7 +85,7 @@ export function Navbar({ onConsult }: { onConsult?: () => void }) {
   }, [isOpen]);
 
   return (
-    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-[1400px] px-4 md:px-8">
+    <header className={`fixed left-1/2 -translate-x-1/2 z-50 w-full max-w-[1400px] px-4 md:px-8 transition-[top] duration-500 ${isScrolled ? "top-3" : "top-6"}`}>
       <motion.div
         animate={{
           backgroundColor: isScrolled
@@ -70,7 +95,7 @@ export function Navbar({ onConsult }: { onConsult?: () => void }) {
           boxShadow: isScrolled ? "0 10px 30px rgba(0, 0, 0, 0.2)" : "0 4px 30px rgba(0, 0, 0, 0.1)",
         }}
         transition={{ duration: 0.3 }}
-        className="flex items-center justify-between px-6 py-3 lg:px-8 lg:py-3 backdrop-blur-2xl rounded-[3rem] border border-transparent"
+        className={`flex items-center justify-between px-6 lg:px-8 backdrop-blur-2xl rounded-[3rem] border border-transparent transition-[padding] duration-500 ${isScrolled ? "py-2" : "py-3"}`}
       >
         {/* Left: Logo Area */}
         <div className="flex items-center pl-2">
@@ -104,7 +129,8 @@ export function Navbar({ onConsult }: { onConsult?: () => void }) {
             <a
               key={l.to}
               href={l.to}
-              className="px-4 py-2 rounded-full text-white/90 hover:text-white hover:bg-white/10 hover:backdrop-blur-md text-[10px] font-black tracking-[0.25em] uppercase transition-all"
+              aria-current={activeSection === (l.to === "#" ? "hero-section" : l.to.slice(1)) ? "location" : undefined}
+              className={`nav-link px-4 py-2 rounded-full text-white/75 hover:text-white hover:bg-white/10 hover:backdrop-blur-md text-[10px] font-black tracking-[0.25em] uppercase transition-all ${activeSection === (l.to === "#" ? "hero-section" : l.to.slice(1)) ? "is-active" : ""}`}
             >
               {l.label}
             </a>
@@ -116,9 +142,9 @@ export function Navbar({ onConsult }: { onConsult?: () => void }) {
           <button
             type="button"
             onClick={handleConsult}
-            className="hidden md:inline-flex items-center justify-center px-8 py-2 text-[13px] font-black text-white transition-all bg-white/5 backdrop-blur-md rounded-full hover:bg-white/10 border border-white/15"
+            className="nav-consult hidden md:inline-flex items-center justify-center gap-2 px-6 py-2.5 text-[11px] font-black text-white rounded-full"
           >
-            Consultation
+            Consultation <span aria-hidden="true" className="nav-cta-arrow">↗</span>
           </button>
           
           <button
@@ -160,9 +186,9 @@ export function Navbar({ onConsult }: { onConsult?: () => void }) {
                   setIsOpen(false);
                   handleConsult();
                 }}
-                className="mt-4 rounded-2xl border border-accent/30 bg-accent/10 px-4 py-4 text-sm font-semibold uppercase tracking-widest text-accent transition-colors hover:bg-accent/20 text-center"
+                className="nav-consult mt-4 rounded-2xl px-4 py-4 text-sm font-semibold uppercase tracking-widest text-center"
               >
-                Request a Consultation
+                Request a Consultation <span aria-hidden="true" className="nav-cta-arrow ml-2">↗</span>
               </button>
             </div>
           </motion.div>
