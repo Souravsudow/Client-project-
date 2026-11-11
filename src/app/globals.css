@@ -103,6 +103,7 @@
 @media (max-width: 767px), (max-height: 600px) and (pointer: coarse) {
   .hero-mobile-video { display: block; }
   .hero-desktop-sequence { display: none; }
+  .hero-overlay { display: none; }
 }
 
 .hero-poster {
