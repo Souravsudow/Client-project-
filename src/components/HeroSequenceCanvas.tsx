@@ -8,12 +8,13 @@ import {
 } from "framer-motion";
 
 interface Props {
+  className?: string;
   scrollYProgress: MotionValue<number>;
 }
 
 const FRAME_COUNT = 506;
 
-export default function HeroSequenceCanvas({ scrollYProgress }: Props) {
+export default function HeroSequenceCanvas({ className, scrollYProgress }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mobileBackdropRef = useRef<HTMLCanvasElement | null>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
@@ -161,6 +162,9 @@ export default function HeroSequenceCanvas({ scrollYProgress }: Props) {
   // Preload the sequence, painting frame 1 as soon as it decodes instead of
   // waiting for all 506 frames.
   useEffect(() => {
+    // Mobile uses the dedicated portrait MP4 instead of downloading 506 frames.
+    if (window.matchMedia("(max-width: 767px), (max-height: 600px) and (pointer: coarse)").matches) return;
+
     let cancelled = false;
     let loadedCount = 0;
     const images: HTMLImageElement[] = new Array(FRAME_COUNT);
@@ -219,7 +223,7 @@ export default function HeroSequenceCanvas({ scrollYProgress }: Props) {
   });
 
   return (
-    <div style={{ position: "absolute", inset: 0, backgroundColor: "#000" }}>
+    <div className={className} style={{ position: "absolute", inset: 0, backgroundColor: "#000" }}>
       {/* Loading indicator */}
       {!ready && (
         <div
