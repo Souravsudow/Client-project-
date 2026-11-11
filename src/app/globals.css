@@ -100,10 +100,36 @@
   background: #000;
 }
 
+.hero-watermark-cover {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  top: 80%;
+  right: 6%;
+  width: clamp(50px, 14vw, 62px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(216, 190, 131, 0.78);
+  border-radius: 50%;
+  background: #0b0a09;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.36), inset 0 0 14px rgba(216, 190, 131, 0.08);
+  color: #f4ead2;
+  pointer-events: none;
+}
+
+.hero-watermark-cover span {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  transform: translateX(0.04em);
+}
+
 @media (max-width: 767px), (max-height: 600px) and (pointer: coarse) {
   .hero-section { height: 100svh; }
   .hero-sticky { height: 100svh; }
   .hero-mobile-video { display: block; }
+  .hero-watermark-cover { display: grid; }
   .hero-desktop-sequence { display: none; }
   .hero-overlay { display: none; }
 }

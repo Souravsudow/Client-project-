@@ -34,6 +34,9 @@ export default function HeroSection() {
           scrollYProgress={scrollYProgress}
         />
         <HeroOverlay scrollYProgress={scrollYProgress} />
+        <div className="hero-watermark-cover" aria-hidden="true">
+          <span>IM</span>
+        </div>
       </div>
     </section>
   );
