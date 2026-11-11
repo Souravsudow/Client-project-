@@ -53,7 +53,6 @@ export default function TrustSection() {
                   <span className="activity-index">{String(index + 1).padStart(2, "0")}</span>
                 </div>
                 <h3>{activity}</h3>
-                <span className="activity-arrow" aria-hidden="true">↗</span>
               </article>
             ))}
           </AnimatedStagger>
