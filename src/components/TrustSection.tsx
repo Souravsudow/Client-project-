@@ -4,6 +4,19 @@ import AnimatedSection from "./AnimatedSection";
 import { AnimatedStagger } from "./AnimatedStagger";
 import { company, trustPoints } from "@/lib/site";
 
+const activityIcons = [
+  "M13 2 4 14h7l-1 8 10-12h-7l1-8Z",
+  "m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5",
+  "m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z",
+  "m14 4 6 6-9 9-6-6 9-9ZM5 13l-2 2v6h6l2-2",
+  "m4 7 8-4 8 4-8 4-8-4Zm0 5 8 4 8-4M4 17l8 4 8-4",
+  "M4 5h16l-8 9-8-9Zm8 9v7",
+  "M9 3v7m6-7v7M7 10h10v2a5 5 0 0 1-5 5v4m-3-11V7a3 3 0 0 1 6 0v3",
+  "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
+  "M3 5h18M6 5v14m6-14v14m6-14v14M3 19h18",
+  "M4 4v16m5-16v16m5-16v16m5-16v16M3 8h18m-18 8h18",
+];
+
 export default function TrustSection() {
   return (
     <section id="trust" className="section trust-section">
@@ -28,13 +41,22 @@ export default function TrustSection() {
             Issued by Dubai Department of Economy &amp; Tourism
           </div>
           
-          <div className="activity-pills stagger">
-            {company.activities.map((activity) => (
-              <span key={activity} className="activity-pill">
-                {activity}
-              </span>
+          <AnimatedStagger className="activity-grid">
+            {company.activities.map((activity, index) => (
+              <article key={activity} className="activity-card">
+                <div className="activity-card-top">
+                  <span className="activity-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={activityIcons[index % activityIcons.length]} />
+                    </svg>
+                  </span>
+                  <span className="activity-index">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <h3>{activity}</h3>
+                <span className="activity-arrow" aria-hidden="true">↗</span>
+              </article>
             ))}
-          </div>
+          </AnimatedStagger>
         </div>
       </AnimatedSection>
 
