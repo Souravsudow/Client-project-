@@ -101,6 +101,8 @@
 }
 
 @media (max-width: 767px), (max-height: 600px) and (pointer: coarse) {
+  .hero-section { height: 100svh; }
+  .hero-sticky { height: 100svh; }
   .hero-mobile-video { display: block; }
   .hero-desktop-sequence { display: none; }
   .hero-overlay { display: none; }
