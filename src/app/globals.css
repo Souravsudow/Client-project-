@@ -104,7 +104,7 @@
   display: none;
   position: absolute;
   z-index: 20;
-  top: 80%;
+  top: 86%;
   right: 6%;
   width: clamp(50px, 14vw, 62px);
   aspect-ratio: 1;
